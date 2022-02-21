@@ -7,6 +7,8 @@ services:
     working_dir: /src
     volumes:
       - ./:/src
+    env_file:
+      - .env
     depends_on:
       - mysql
   mysql:
