@@ -1,0 +1,28 @@
+version: '3'
+services:
+  backend:
+    build: .
+    tty: true
+    container_name: backend
+    working_dir: /src
+    volumes:
+      - ./:/src
+    depends_on:
+      - mysql
+  mysql:
+    platform: linux/x86_64 # for Apple M1 chip
+    image: mysql:8.0
+    container_name: mysql
+    volumes:
+      - ./dump:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: backend
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+volumes:
+  db_data: {}
